@@ -35,7 +35,9 @@ const getFromBackupProviders = async (hash: string, providers: Array<any>, escan
 
 const goGetIt = async (hash: string, providers: Array<any>, escan: any) => {
   try {
-    let _txResponse = await providers[getRandomInt(1, providers.length - 1)].getTransaction(hash);
+    let _txResponse = await providers[0].getTransaction(hash);
+    if (_txResponse) return _txResponse;
+    _txResponse = await providers[getRandomInt(1, providers.length - 1)].getTransaction(hash);
     if (_txResponse) return _txResponse;
     _txResponse = await escan.getTransaction(hash);
     if (_txResponse) return _txResponse;
