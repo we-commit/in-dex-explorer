@@ -1,8 +1,8 @@
 import { _log, getRandomInt } from '../configs/utils';
 
-const getPendingTxResponse = async (hash: string, providers: Array<any>) => {
+const getPendingTxResponse = async (hash: string, providers: Array<any>, escan: any) => {
   try {
-    const _txResponse = await getFromBackupProviders(hash, providers);
+    const _txResponse = await getFromBackupProviders(hash, providers, escan);
     return _txResponse;
   } catch (e: any) {
     _log.error('getPendingTxResponse catch ', hash);
@@ -10,9 +10,9 @@ const getPendingTxResponse = async (hash: string, providers: Array<any>) => {
   return null;
 };
 
-const getFromBackupProviders = async (hash: string, providers: Array<any>) => {
+const getFromBackupProviders = async (hash: string, providers: Array<any>, escan: any) => {
   try {
-    const txResponse = await goGetIt(hash, providers);
+    const txResponse = await goGetIt(hash, providers, escan);
     if (txResponse) {
       const { to, from } = txResponse;
       if (to && from) {
@@ -21,7 +21,7 @@ const getFromBackupProviders = async (hash: string, providers: Array<any>) => {
     }
   } catch (e: any) {
     if (e.message === 'noNetwork') {
-      const txResponse = await goGetIt(hash, providers);
+      const txResponse = await goGetIt(hash, providers, escan);
       if (txResponse) {
         const { to, from } = txResponse;
         if (to && from) {
@@ -33,10 +33,11 @@ const getFromBackupProviders = async (hash: string, providers: Array<any>) => {
   return null;
 };
 
-const goGetIt = async (hash: string, providers: Array<any>) => {
+const goGetIt = async (hash: string, providers: Array<any>, escan: any) => {
   try {
-    const _txResponse = await providers[getRandomInt(1, providers.length - 1)].getTransaction(hash);
-
+    let _txResponse = await providers[getRandomInt(1, providers.length - 1)].getTransaction(hash);
+    if (_txResponse) return _txResponse;
+    _txResponse = await escan.getTransaction(hash);
     if (_txResponse) return _txResponse;
   } catch (e: any) {
     _log.info(e);

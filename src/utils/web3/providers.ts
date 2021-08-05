@@ -27,7 +27,7 @@ const linkpool2 = new WebSocketProvider('wss://main-rpc.linkpool.io/ws', network
 const getblock = new WebSocketProvider('wss://eth.getblock.io/mainnet/?api_key=' + GET_BLOCK_KEY, network);
 const pokt = new StaticJsonRpcProvider('https://eth-mainnet.gateway.pokt.network/v1/lb/' + POKT_KEY, network);
 
-const providersForLM: Array<any> = [mainWsLMem, mainWsExtra, escan1, alcheWs1, linkpool, getblock, pokt];
-const providersForLC: Array<any> = [mainWsLConf, mainWsLConf, escan2, alcheWs2, linkpool2];
+const providersForLM: Array<any> = [mainWsLMem, mainWsExtra, alcheWs1, linkpool, getblock, pokt];
+const providersForLC: Array<any> = [mainWsLConf, mainWsLConf, alcheWs2, linkpool2];
 
-export { providersForLM, providersForLC, mainWsComm };
+export { providersForLM, providersForLC, mainWsComm, escan1, escan2 };

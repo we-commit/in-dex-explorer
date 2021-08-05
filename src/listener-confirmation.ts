@@ -1,5 +1,5 @@
 import { startMongo, models } from './utils/mongo/config';
-import { providersForLC } from './utils/web3/providers';
+import { escan2, providersForLC } from './utils/web3/providers';
 import { _log, timeout } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
@@ -59,7 +59,7 @@ const listenRouter = async (filter: Array<any>, isV2: boolean) => {
           return;
         }
 
-        const tx = await getPendingTxResponse(hash, providersForLC);
+        const tx = await getPendingTxResponse(hash, providersForLC, escan2);
         if (tx) {
           const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
           pendingTx_uni_sushi(tx, whaleData, true, providersForLC);
