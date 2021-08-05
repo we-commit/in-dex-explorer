@@ -42,7 +42,7 @@ export default function TradeDetail({ tx, showMe, methodName, tradeType, whaleDa
           Gas Price
         </Text>
         <Text fontWeight={500} fontSize={12}>
-          {utils.formatUnits(Number(gasPrice), "gwei").slice(0, 6)} Gwei
+          {gasPrice && utils.formatUnits(Number(gasPrice), "gwei").slice(0, 6)} Gwei
         </Text>
       </RowBetween>
 

@@ -8,7 +8,7 @@ const network = {
 
 const { INFURA_KEY1, INFURA_KEY2, INFURA_KEY3, INFURA_KEY4, ALCHEMY_KEY1, ALCHEMY_KEY2, ETHERSCAN_KEY1, ETHERSCAN_KEY2, POKT_KEY, GET_BLOCK_KEY } = KEYS;
 
-const { WebSocketProvider, EtherscanProvider, PocketProvider, BaseProvider } = providers;
+const { WebSocketProvider, EtherscanProvider, StaticJsonRpcProvider } = providers;
 
 const mainWsLMem = new WebSocketProvider('wss://mainnet.infura.io/ws/v3/' + INFURA_KEY1, network);
 const mainWsComm = new WebSocketProvider('wss://mainnet.infura.io/ws/v3/' + INFURA_KEY2, network);
@@ -25,7 +25,7 @@ const escan2 = new EtherscanProvider(network, ETHERSCAN_KEY2);
 const linkpool = new WebSocketProvider('wss://main-rpc.linkpool.io/ws', network);
 const linkpool2 = new WebSocketProvider('wss://main-rpc.linkpool.io/ws', network);
 const getblock = new WebSocketProvider('wss://eth.getblock.io/mainnet/?api_key=' + GET_BLOCK_KEY, network);
-const pokt = new PocketProvider(network, POKT_KEY);
+const pokt = new StaticJsonRpcProvider('https://eth-mainnet.gateway.pokt.network/v1/lb/' + POKT_KEY, network);
 
 const providersForLM: Array<any> = [mainWsLMem, mainWsExtra, escan1, alcheWs1, linkpool, getblock, pokt];
 const providersForLC: Array<any> = [mainWsLConf, mainWsLConf, escan2, alcheWs2, linkpool2];

@@ -41,7 +41,7 @@ export default function TradeDetai1Inch({ tx, showMe, methodName, tradeType, wha
           Gas Price
         </Text>
         <Text fontWeight={500} fontSize={12}>
-          {utils.formatUnits(Number(gasPrice), "gwei").slice(0, 6)} Gwei
+          {gasPrice && utils.formatUnits(Number(gasPrice), "gwei").slice(0, 6)} Gwei
         </Text>
       </RowBetween>
 
