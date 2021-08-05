@@ -1,0 +1,33 @@
+import { providers } from 'ethers';
+import { KEYS, _log } from '../configs/utils';
+
+const network = {
+  name: 'homestead',
+  chainId: 1
+};
+
+const { INFURA_KEY1, INFURA_KEY2, INFURA_KEY3, INFURA_KEY4, ALCHEMY_KEY1, ALCHEMY_KEY2, ETHERSCAN_KEY1, ETHERSCAN_KEY2, POKT_KEY, GET_BLOCK_KEY } = KEYS;
+
+const { WebSocketProvider, EtherscanProvider, PocketProvider, BaseProvider } = providers;
+
+const mainWsLMem = new WebSocketProvider('wss://mainnet.infura.io/ws/v3/' + INFURA_KEY1, network);
+const mainWsComm = new WebSocketProvider('wss://mainnet.infura.io/ws/v3/' + INFURA_KEY2, network);
+const mainWsLConf = new WebSocketProvider('wss://mainnet.infura.io/ws/v3/' + INFURA_KEY3, network);
+
+const mainWsExtra = new WebSocketProvider('wss://mainnet.infura.io/ws/v3/' + INFURA_KEY4, network);
+
+const alcheWs1 = new WebSocketProvider('wss://eth-mainnet.alchemyapi.io/v2/' + ALCHEMY_KEY1, network);
+const alcheWs2 = new WebSocketProvider('wss://eth-mainnet.alchemyapi.io/v2/' + ALCHEMY_KEY2, network);
+
+const escan1 = new EtherscanProvider(network, ETHERSCAN_KEY1);
+const escan2 = new EtherscanProvider(network, ETHERSCAN_KEY2);
+
+const linkpool = new WebSocketProvider('wss://main-rpc.linkpool.io/ws', network);
+const linkpool2 = new WebSocketProvider('wss://main-rpc.linkpool.io/ws', network);
+const getblock = new WebSocketProvider('wss://eth.getblock.io/mainnet/?api_key=' + GET_BLOCK_KEY, network);
+const pokt = new PocketProvider(network, POKT_KEY);
+
+const providersForLM: Array<any> = [mainWsLMem, mainWsExtra, escan1, alcheWs1, linkpool, getblock, pokt];
+const providersForLC: Array<any> = [mainWsLConf, mainWsLConf, escan2, alcheWs2, linkpool2];
+
+export { providersForLM, providersForLC, mainWsComm };
