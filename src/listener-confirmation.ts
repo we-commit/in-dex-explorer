@@ -1,5 +1,5 @@
 import { startMongo, models } from './utils/mongo/config';
-import { escan2, providersForLC } from './utils/web3/providers';
+import { escan2, MAIN_WS, providersForLC } from './utils/web3/providers';
 import { _log, timeout } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
@@ -36,7 +36,7 @@ startMongo(serverName).then(async (started) => {
 
 const listenRouter = async (filter: Array<any>, isV2: boolean) => {
   try {
-    providersForLC[0].on(
+    MAIN_WS.on(
       {
         topics: filter
       },

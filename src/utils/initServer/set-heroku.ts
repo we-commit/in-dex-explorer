@@ -1,5 +1,5 @@
-import { exec } from 'child_process';
 import 'dotenv/config';
+import { exec } from 'child_process';
 import { _log } from '../configs/utils';
 
 const callbackpew = (error: any, stdout: string, stderr: string) => {
@@ -15,6 +15,7 @@ exec('heroku config:set CORS_ORIGIN="' + process.env.CORS_ORIGIN + '" -a ' + pro
 exec('heroku config:set GAS_STATION_API_URL="' + process.env.GAS_STATION_API_URL + '" -a ' + process.env.HEROKU_APP_NAME, callbackpew);
 exec('heroku config:set BLOCKNATIVE_API_URL="' + process.env.BLOCKNATIVE_API_URL + '" -a ' + process.env.HEROKU_APP_NAME, callbackpew);
 exec('heroku config:set BLOCKNATIVE_API_KEY="' + process.env.BLOCKNATIVE_API_KEY + '" -a ' + process.env.HEROKU_APP_NAME, callbackpew);
+exec('heroku config:set MAIN_WS="' + process.env.MAIN_WS + '" -a ' + process.env.HEROKU_APP_NAME, callbackpew);
 exec('heroku config:set INFURA_KEY1="' + process.env.INFURA_KEY1 + '" -a ' + process.env.HEROKU_APP_NAME, callbackpew);
 exec('heroku config:set INFURA_KEY2="' + process.env.INFURA_KEY2 + '" -a ' + process.env.HEROKU_APP_NAME, callbackpew);
 exec('heroku config:set INFURA_KEY3="' + process.env.INFURA_KEY3 + '" -a ' + process.env.HEROKU_APP_NAME, callbackpew);

@@ -1,5 +1,5 @@
 import { startMongo, models } from './utils/mongo/config';
-import { escan1, providersForLM } from './utils/web3/providers';
+import { escan1, MAIN_WS, providersForLM } from './utils/web3/providers';
 import { nowMs, timeout, _log } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
@@ -25,7 +25,7 @@ startMongo(serverName).then(async (started) => {
 });
 
 const startListenPending = () => {
-  providersForLM[0]._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
+  MAIN_WS._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
     new hashes({
       hash,
       txHash: hash,
