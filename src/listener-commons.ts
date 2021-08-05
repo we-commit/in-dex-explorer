@@ -1,6 +1,6 @@
 import { startMongo, models } from './utils/mongo/config';
 import { ENV, _log, KEYS, nowMs, timeout } from './utils/configs/utils';
-import { MAIN_WS_PROVIDER } from './utils/web3/providers';
+import { mainWsComm } from './utils/web3/providers';
 import { getBlockInfo, getBlock } from './utils/web3/getBlocks';
 import { saveBlock, updateBlock } from './utils/mongo/saveBlock';
 import { pendingOld } from './utils/mongo/saveConfirmed';
