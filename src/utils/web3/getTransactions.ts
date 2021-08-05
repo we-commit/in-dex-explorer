@@ -37,14 +37,22 @@ const goGetIt = async (hash: string, providers: Array<any>, escan: any) => {
   try {
     let _txResponse = await providers[0].getTransaction(hash);
     if (_txResponse) return _txResponse;
-    _txResponse = await providers[getRandomInt(1, providers.length - 1)].getTransaction(hash);
-    if (_txResponse) return _txResponse;
-    _txResponse = await escan.getTransaction(hash);
+  } catch (e: any) {
+    _log.warn(e.message);
+  }
+  try {
+    let _txResponse = await providers[getRandomInt(1, providers.length - 1)].getTransaction(hash);
     if (_txResponse) return _txResponse;
   } catch (e: any) {
-    _log.info(e);
-    throw new Error(e.event);
+    _log.warn(e.message);
   }
+  try {
+    let _txResponse = await escan.getTransaction(hash);
+    if (_txResponse) return _txResponse;
+  } catch (e: any) {
+    _log.warn(e.message);
+  }
+
   return null;
 };
 
