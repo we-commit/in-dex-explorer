@@ -1,12 +1,6 @@
 # Mono Repo for Trojan Finance.
 
-An open source DEX explorer for Defi.
-
-This repository consist of several scripts/workers/servers described in the following doc.
-
-## How it works.
-
-Todo:
+An open source DEX explorer for Uniswap and Sushiswap.
 
 # Running.
 
