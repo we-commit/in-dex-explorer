@@ -1,9 +1,10 @@
 # Mono Repo for Trojan Finance.
 
 A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Uniswap** and **Sushiswap**.
-<br></br>
-<img style="display:block;margin:auto;" width="65%" src="./_assets/1.gif">
-<br></br>
+
+- https://app.trojan.finance/#/explorer
+  <br></br>
+  <img  style="margin-left:10rem" src="./_assets/1.gif">
 
 # Main Features.
 
@@ -34,7 +35,7 @@ Look at the difference between the following tokens (for example) and get your o
 
 ### Examples.
 
-Among other use cases, you can get advantage of real time updates to.
+Among other use cases, you can get advantage of real time swaps information to.
 
 - Jump in a new TOKEN recently added to uniswap or sushiswap.
 
@@ -44,7 +45,7 @@ Among other use cases, you can get advantage of real time updates to.
 
 - Check users trading at the same time from different wallets, connect them and think about what they are doing.
 
-- Among a lot of other scenarios, its on the user (you) to discover and decide how to use the data.
+- ### **Among a lot of other scenarios, its on the user (you) to discover and decide how to use Trojan Finance.**
 
 ## **Token / ETH Prices**
 
@@ -67,26 +68,26 @@ _We are looking for a way to import more whales addresses from other sources._
 
 # Running.
 
-Generate a **./env** file with all the data necesary as indicated in .**sample-env file.**
+Clone the reposity and install dependencies.
 
-Generate a **./client/env** file with all the data necesary as indicated in .**sample-env file.**
-
-Check the following sections to get an idea of the environment variables.
-
-_If you want to run this in heroku, check the set-heroku script, save some time, you need the **heroku-cli** locally installed_
+    git clone https://github.com/we-commit/in-dex-explorer.git
 
 # Requirements
 
 ## **Node**
 
-Use nodejs 14+ and run with yarn.
+Use nodejs v14.16.1+ and run with yarn.
 
-- Nodejs 14+: i recomend https://github.com/nvm-sh/nvm
+- Nodejs v14.16.1+: Recomend https://github.com/nvm-sh/nvm
 - Yarn: https://classic.yarnpkg.com/en/docs/install
 
 ## **MongoDB**
 
-Create an account, follow the instructions and create a free shared cluter, wait a few minutes, create a user and get the connection information to later set the ATLAS_STRING .env variable.
+Create an account, follow the instructions and create a free database using a shared cluster.
+
+Wait a few minutes so the databaseis available.
+
+Create a user and get the connection information to later set the ATLAS_STRING .env variable and connect to the database.
 
 - MongoDB Cluster: https://www.mongodb.com/cloud/atlas/register
 
