@@ -16,14 +16,17 @@ We take the mempool **input data** for every **new pending transaction**, we dec
 
 ## **Real Time Updates**
 
-The interface run with real time updates, so you can...
+The mempool interface run with real time updates, so you can be aware of some kind of "extendend network state"... like watching the future transactions to be included (or not) in the confirmed netwrok state.
+
+In terms of a DEX Swap over a token pair/pool this mean a new impact on it, changing the price (in some cases) of a token in the exosystem.
 
 ### For example .
 
-If a token its being traded like really fast (HOT), or if a token its not beign traded at all.
-This give the user a better idea of **what its really happening in the network**.
+Just by watching the UI u are able to realize if a token its being traded like really fast (HOT), or if a token its not beign traded at all.
 
-Look at the difference between the following tokens (for example) and get your own idea.
+This give the user (a defi trader) a better idea of **what its really happening in the network, protocol, dex or token**.
+
+Look at the difference between the following tokens, and get your own idea.
 
 - An always **HOT** token (really fast updates), all TXs involving WETH: https://app.trojan.finance/#/explorer?inputCurrency=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
 
@@ -33,9 +36,9 @@ Look at the difference between the following tokens (for example) and get your o
 
 - A **NOT_HOT** token, TXs involving LINK: https://app.trojan.finance/#/explorer?inputCurrency=0x514910771AF9Ca656af840dff83E8264EcF986CA
 
-### Examples.
+  ### Examples.
 
-Among other use cases, you can get advantage of real time swaps information to.
+  Among other use cases, you can get advantage of real time swaps information to.
 
 - Jump in a new TOKEN recently added to uniswap or sushiswap.
 
@@ -43,7 +46,7 @@ Among other use cases, you can get advantage of real time swaps information to.
 
 - Check whales movements and realize how much they are trading or how much token balances they got available to DROP/PUMP a token.
 
-- Check users trading at the same time from different wallets, connect them and think about what they are doing.
+- _Check users trading at the same time from different wallets, connect them and think about what they are doing.... **yeah, just like a real trading bot does** .... you can actually extend this code and hook an implementation to feed you trading bot with usefull data ... just sayin ...._
 
 - ### **Among a lot of other scenarios, its on the user (you) to discover and decide how to use Trojan Finance.**
 
@@ -65,6 +68,16 @@ The interface shows a TAG in the transaction header of the explorer, in case a k
 We use sibil list to import some public / verified users from https://raw.githubusercontent.com/Uniswap/sybil-list/master/verified.json.
 
 _We are looking for a way to import more whales addresses from other sources._
+
+## Backend....
+
+There are some usefull things trojan does in the backend... hope you can discover them but just to start i can post the first one.
+
+- Tokens. after the app start runing, listening all the swap trades, some times they got new tokens related, and we dont have the token data, so we go and get the token information from the network and we add it to our database, you can realize that this happends usually when a new token its created in the network (recetly added or deployed on main net) so you can actually be aware of all new tokens beign swapped in uniswap and get an opportunity to jump in a good project ... =)
+
+- In a similar way for every tx , trojan inspect the addresses related , from, receiver, to, etc, and tag them if they are knows, so you can actually be aware to, for example, when a whale wake up ...
+
+- etc .....
 
 # Running.
 
@@ -90,6 +103,10 @@ Wait a few minutes so the databaseis available.
 Create a user and get the connection information to later set the ATLAS_STRING .env variable and connect to the database.
 
 - MongoDB Cluster: https://www.mongodb.com/cloud/atlas/register
+
+- You can use you own mongo instance, but need replica set oplog for mongo listeners. https://docs.mongodb.com/manual/core/replica-set-oplog/
+  In my oppinion its the fastest way to have a cetralized data feed that can notify in real time to any external service about any modification on it.
+  This is important as we need a way to really fast send new pending tx data to the front, and change the tx status when its necesary. _And actually hook to this any other service like a trading bot, a telegram notification script, slack ... etc._
 
 ## **Api Providers**
 
@@ -362,3 +379,14 @@ For now it works only for _Ethereum_ _Main_ _Net_.
 ```
 Cheers! 🐶
 ```
+
+# Community.
+
+Jump in...
+
+<ul class="">
+   <li> <a target="_blank"  href="https://discord.gg/VZkFP78aeF">Discord</a> </li>
+   <li> <a target="_blank"  href="https://twitter.com/FinanceTrojan">Twitter</a> </li>
+   <li> <a target="_blank"  href="https://medium.com/@trojanfinance">Medium</a></li>
+   <li> <a target="_blank"  href="https://github.com/we-commit">Github</a></li>
+</ul>
