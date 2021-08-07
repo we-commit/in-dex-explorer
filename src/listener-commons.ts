@@ -93,7 +93,7 @@ const proccessBlockQueue = async () => {
 };
 
 const startFixerJustKill = async () => {
-  const old_txs = 5;
+  const old_txs = 7;
 
   let end = new Date();
   end.setMinutes(new Date().getMinutes() - old_txs);
@@ -116,7 +116,7 @@ const fixOlds = async (oldTxs: Array<any>) => {
 };
 
 const startFixerG = async () => {
-  const old_g = 120;
+  const old_g = 240;
 
   let end = new Date();
   end.setMinutes(new Date().getMinutes() - old_g);
@@ -124,5 +124,4 @@ const startFixerG = async () => {
 
   await g.hashes.deleteMany({ timestampTx: { $lt: end.getTime() } }, {});
   await g.trash.deleteMany({ timestampTx: { $lt: end.getTime() } }, {});
-  await g.blocks.deleteMany({ timestampTx: { $lt: end.getTime() } }, {});
 };

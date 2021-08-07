@@ -1,4 +1,4 @@
-import { _log, getRandomInt } from '../configs/utils';
+import { _log } from '../configs/utils';
 
 const getPendingTxResponse = async (hash: string, providers: Array<any>, escan: any) => {
   try {
@@ -36,7 +36,7 @@ const getFromBackupProviders = async (hash: string, providers: Array<any>, escan
 const goGetIt = async (hash: string, providers: Array<any>, escan: any) => {
   const l = providers.length;
 
-  for (let i = 0; i < l; i++) {
+  for (let i = l; i >= 0; i--) {
     try {
       let _txResponse = await providers[i].getTransaction(hash);
       if (_txResponse) return _txResponse;
