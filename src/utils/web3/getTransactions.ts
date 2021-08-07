@@ -41,7 +41,7 @@ const goGetIt = async (hash: string, providers: Array<any>, escan: any) => {
       let _txResponse = await providers[i].getTransaction(hash);
       if (_txResponse) return _txResponse;
     } catch (e: any) {
-      _log.warn(e.message);
+      _log.info(e.message);
     }
   }
 
@@ -49,7 +49,7 @@ const goGetIt = async (hash: string, providers: Array<any>, escan: any) => {
     let _txResponse = await escan.getTransaction(hash);
     if (_txResponse) return _txResponse;
   } catch (e: any) {
-    _log.warn(e.message);
+    _log.info(e.message);
   }
 
   return null;
