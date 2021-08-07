@@ -34,7 +34,7 @@ const getFromBackupProviders = async (hash: string, providers: Array<any>, escan
 };
 
 const goGetIt = async (hash: string, providers: Array<any>, escan: any) => {
-  const l = providers.length;
+  const l = providers.length - 1;
 
   for (let i = l; i >= 0; i--) {
     try {
