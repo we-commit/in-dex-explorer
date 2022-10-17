@@ -5,6 +5,10 @@ A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Un
 - https://app.trojan.finance/#/explorer
   <br></br>
   <img  style="margin-left:10rem" src="./_assets/1.gif">
+  
+
+***Due to Ethereum change to proof of Stake consensus, this repository is now out-of-date. Use it at your own risk.***
+
 
 # Main Features.
 
