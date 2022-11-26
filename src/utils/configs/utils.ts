@@ -34,17 +34,10 @@ const KEYS = {
   BLOCKNATIVE_API_OPT: {
     headers: { Authorization: process.env.BLOCKNATIVE_API_KEY || '' }
   },
-  MAIN_WS: process.env.MAIN_WS || '',
-  INFURA_KEY1: process.env.INFURA_KEY1 || '',
-  INFURA_KEY2: process.env.INFURA_KEY2 || '',
-  INFURA_KEY3: process.env.INFURA_KEY3 || '',
-  INFURA_KEY4: process.env.INFURA_KEY4 || '',
-  ETHERSCAN_KEY1: process.env.ETHERSCAN_KEY1 || '',
-  ETHERSCAN_KEY2: process.env.ETHERSCAN_KEY2 || '',
-  ALCHEMY_KEY1: process.env.ALCHEMY_KEY1 || '',
-  ALCHEMY_KEY2: process.env.ALCHEMY_KEY2 || '',
-  GET_BLOCK_KEY: process.env.GET_BLOCK_KEY || '',
-  POKT_KEY: process.env.POKT_KEY || ''
+  MAIN_WS_URL: process.env.MAIN_WS_URL || '',
+  INFURA_URL: process.env.INFURA_URL || '',
+  ETHERSCAN_KEY: process.env.ETHERSCAN_KEY || '',
+  ALCHEMY_URL: process.env.ALCHEMY_URL || '',
 };
 
 const ROUTERS = {

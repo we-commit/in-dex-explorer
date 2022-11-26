@@ -1,5 +1,5 @@
 import { startMongo, models } from './utils/mongo/config';
-import { escan2, MAIN_WS_PROVIDER, providersForLC } from './utils/web3/providers';
+import { ETHERSCAN_PROVIDER, MAIN_WS_URL_PROVIDER, confirmedProviders } from './utils/web3/providers';
 import { _log, timeout } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
@@ -36,7 +36,7 @@ startMongo(serverName).then(async (started) => {
 
 const listenRouter = async (filter: Array<any>, isV2: boolean) => {
   try {
-    MAIN_WS_PROVIDER.on(
+    MAIN_WS_URL_PROVIDER.on(
       {
         topics: filter
       },
@@ -59,10 +59,10 @@ const listenRouter = async (filter: Array<any>, isV2: boolean) => {
           return;
         }
 
-        const tx = await getPendingTxResponse(hash, providersForLC, escan2);
+        const tx = await getPendingTxResponse(hash, confirmedProviders, ETHERSCAN_PROVIDER);
         if (tx) {
           const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
-          pendingTx_uni_sushi(tx, whaleData, true, providersForLC);
+          pendingTx_uni_sushi(tx, whaleData, true, confirmedProviders);
         } else {
           _log.error('getPendingTxResponse ', hash, 'not found confirmed tx?');
         }
