@@ -1,3 +1,7 @@
+## This repository has been moved to:
+
+- https://github.com/offshoredao/in-dex-explorer
+
 # Mono Repo for Trojan Finance.
 
 A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Uniswap** and **Sushiswap**.
@@ -6,10 +10,6 @@ A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Un
   <br></br>
   <img  style="margin-left:10rem" src="./_assets/1.gif">
   
-
-***Due to Ethereum change to proof of Stake consensus, this repository is now out-of-date. Use it at your own risk.***
-
-
 # Main Features.
 
 ## **Live Mempool**.
