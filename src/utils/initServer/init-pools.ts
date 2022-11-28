@@ -75,7 +75,7 @@ const startAddPoolsGet = async (fromBlock: any, lastBlock: any, dex: string, fac
 
 const startAddPools = async () => {
   try {
-    const lastBlock = await mainWsComm.getBlockNumber();
+    const lastBlock = await MAIN_WS_URL_PROVIDER.getBlockNumber();
 
     const pv2 = await g.pools.findOne({ isV2: true }, null, { sort: { blockNumber: -1 } });
     const pv3 = await g.pools.findOne({ isV3: true }, null, { sort: { blockNumber: -1 } });

@@ -48,7 +48,7 @@ const startAddWhales = () => {
     }).on('error', (e) => {
       _log.error(serverName, e.message);
     });
-  } catch (e) {
+  } catch (e: any) {
     _log.error(serverName, e.message);
   }
 };

@@ -15,7 +15,7 @@ const saveWhale = async (whale: any) => {
     new g.whales(w).save((e: any, doc: any) => {
       if (!e) _log.success('savedWhale', doc.address);
     });
-  } catch (e) {
+  } catch (e: any) {
     _log.error('not savedWhale', e.message);
   }
   return;
