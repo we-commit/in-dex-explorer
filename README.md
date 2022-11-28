@@ -1,7 +1,3 @@
-## This repository has been moved to:
-
-- https://github.com/offshoredao/in-dex-explorer
-
 # Mono Repo for Trojan Finance.
 
 A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Uniswap** and **Sushiswap**.
@@ -377,6 +373,8 @@ Cheers! 🐶
 # Community.
 
 Jump in...
+
+- https://github.com/offshoredao
 
 <ul class="">
    <li> <a target="_blank"  href="https://discord.gg/VZkFP78aeF">Discord</a> </li>
