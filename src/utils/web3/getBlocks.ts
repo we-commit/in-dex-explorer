@@ -1,5 +1,5 @@
 import { get } from 'https';
-import { mainWsComm } from './providers';
+import { MAIN_WS_URL_PROVIDER } from './providers';
 import { _log } from '../configs/utils';
 
 const getBlock = async (number: number, provider: any) => {
@@ -19,7 +19,7 @@ const getFromBackupProviders = async (number: number, provider: any) => {
     }
   } catch (e: any) {
     if (e.message === 'noNetwork') {
-      const blockResponse = await goGetIt(mainWsComm, number);
+      const blockResponse = await goGetIt(MAIN_WS_URL_PROVIDER, number);
       if (blockResponse) {
         return blockResponse;
       }

@@ -25,6 +25,8 @@ startMongo(serverName).then(async (started) => {
 });
 
 const startListenPending = () => {
+  console.log('startListenPending');
+
   MAIN_WS_URL_PROVIDER._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
     new hashes({
       hash,
@@ -32,6 +34,7 @@ const startListenPending = () => {
       timestampTx: nowMs()
     }).save(async (e: any) => {
       if (!e) {
+        _log.info('New', hash);
         const tx = await getPendingTxResponse(hash, mempoolProviders, ETHERSCAN_PROVIDER);
         if (tx) {
           const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
