@@ -1,9 +1,9 @@
 import { startMongo, models } from './utils/mongo/config';
-import { escan2, MAIN_WS_PROVIDER, providersForLC } from './utils/web3/providers';
+import { ETHERSCAN_PROVIDER, MAIN_WS_URL_PROVIDER, confirmedProviders } from './utils/web3/providers';
 import { _log, timeout } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
-import { pendingToConfirm, trashToconfirm } from './utils/mongo/saveConfirmed';
+import { pendingToConfirm, trashToConfirm } from './utils/mongo/saveConfirmed';
 
 const { txM, g } = models;
 const { whales } = g;
@@ -24,24 +24,25 @@ startMongo(serverName).then(async (started) => {
     await timeout(2000);
 
     _log.start('SwapV3 listenRouter Go!');
-    listenRouter(SwapV3, false);
+    listenRouter(SwapV3);
     _log.start('SwapV2 listenRouter Go!');
-    listenRouter(SwapV2, true);
+    listenRouter(SwapV2);
     _log.start('SwV2SH listenRouter Go!');
-    listenRouter(SwV2SH, true);
+    listenRouter(SwV2SH);
   } else {
     _log.error('---> started ', started);
   }
 });
 
-const listenRouter = async (filter: Array<any>, isV2: boolean) => {
+const listenRouter = async (filter: Array<any>) => {
   try {
-    MAIN_WS_PROVIDER.on(
+    MAIN_WS_URL_PROVIDER.on(
       {
         topics: filter
       },
       async (data: any) => {
         const hash = data.transactionHash;
+        console.log('confirmed', hash);
         const [knownTx_, knownTx_g_] = await Promise.all([txM.pending.findOne({ hash }, null, {}), g.trash.findOne({ hash }, null, {})]);
         if (knownTx_) {
           const knownTx = knownTx_._doc;
@@ -55,14 +56,14 @@ const listenRouter = async (filter: Array<any>, isV2: boolean) => {
           const knownTx_g = knownTx_g_._doc;
           let nTx = { ...knownTx_g };
           delete nTx._id;
-          trashToconfirm(nTx, {}, serverName);
+          trashToConfirm(nTx, {}, serverName);
           return;
         }
 
-        const tx = await getPendingTxResponse(hash, providersForLC, escan2);
+        const tx = await getPendingTxResponse(hash, confirmedProviders, ETHERSCAN_PROVIDER);
         if (tx) {
           const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
-          pendingTx_uni_sushi(tx, whaleData, true, providersForLC);
+          pendingTx_uni_sushi(tx, whaleData, true, confirmedProviders);
         } else {
           _log.error('getPendingTxResponse ', hash, 'not found confirmed tx?');
         }

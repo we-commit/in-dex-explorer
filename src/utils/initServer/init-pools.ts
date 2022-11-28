@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { models, startMongo } from '../mongo/config';
 import { checksum, nowMs, timeout, _log } from '../configs/utils';
-import { mainWsComm } from '../web3/providers';
+import { MAIN_WS_URL_PROVIDER } from '../web3/providers';
 import { savePools } from '../mongo/savePools';
 
 const serverName = 'initPools';
@@ -36,7 +36,7 @@ const startAddPoolsGet = async (fromBlock: any, lastBlock: any, dex: string, fac
       toBlock: toBlock >= lastBlock ? 'latest' : toBlock,
       topics: [filterTopics]
     };
-    const result = await mainWsComm.getLogs(filter);
+    const result = await MAIN_WS_URL_PROVIDER.getLogs(filter);
 
     if (result)
       for (const r of result) {

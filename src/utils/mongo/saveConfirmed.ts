@@ -124,11 +124,11 @@ const createConfirm = async (tx: any, message: string) => {
   return;
 };
 
-const trashToconfirm = async (back: any, tx: any, message: string) => {
+const trashToConfirm = async (back: any, tx: any, message: string) => {
   try {
     await models.g.trash.deleteOne({ hash: back.hash });
   } catch (e: any) {
-    _log.error('trashToconfirm ', e.message);
+    _log.error('trashToConfirm ', e.message);
   }
   try {
     const timestampTx = nowMs();
@@ -144,16 +144,16 @@ const trashToconfirm = async (back: any, tx: any, message: string) => {
     }).save((e: any) => {
       if (!e)
         _log.success(
-          'trashToconfirm',
+          'trashToConfirm',
           back.isV2 ? 'V2_Confirmed' : back.isV3 ? 'V3_Confirmed' : back.isV2Sushi ? 'V2SH_Confirmed' : ' _Confirmed',
           '|',
           back.hash
         );
     });
   } catch (e: any) {
-    _log.error('trashToconfirm ', e.message);
+    _log.error('trashToConfirm ', e.message);
   }
   return;
 };
 
-export { trashToconfirm, pendingToConfirm, pendingToFailed, pendingToDropped, createConfirm, pendingOld };
+export { trashToConfirm, pendingToConfirm, pendingToFailed, pendingToDropped, createConfirm, pendingOld };

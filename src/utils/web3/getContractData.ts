@@ -7,7 +7,7 @@ const getContractData = async (contractAddress: string, providers: Array<any>): 
   try {
     const address = checksum(contractAddress);
 
-    const contract = new ethers.Contract(address, erc20abi, providers[getRandomInt(1, providers.length - 1)]);
+    const contract = new ethers.Contract(address, erc20abi, providers[0]);
 
     const [decimals, name, symbol] = await Promise.all([contract.functions.decimals(), contract.functions.name(), contract.functions.symbol()]);
 
