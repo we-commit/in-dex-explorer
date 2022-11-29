@@ -38,7 +38,7 @@ const addTokens = async () => {
         } else {
           _log.warn('invalid list?', TOKEN_LIST_ALL[l]);
         }
-      } catch (e) {
+      } catch (e: any) {
         _log.error(serverName, e.message);
       }
       await timeout(6000);

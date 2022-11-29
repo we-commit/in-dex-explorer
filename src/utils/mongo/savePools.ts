@@ -8,7 +8,7 @@ const savePools = async (data: any) => {
     new g.pools(data).save((e: any, doc: any) => {
       //if (!e) _log.success('savedPools', doc.address);
     });
-  } catch (e) {
+  } catch (e: any) {
     _log.error('savedPools', e.message);
   }
   return;
