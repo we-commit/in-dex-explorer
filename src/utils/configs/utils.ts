@@ -37,7 +37,7 @@ const KEYS = {
   MAIN_WS_URL: process.env.MAIN_WS_URL || '',
   INFURA_URL: process.env.INFURA_URL || '',
   ETHERSCAN_KEY: process.env.ETHERSCAN_KEY || '',
-  ALCHEMY_URL: process.env.ALCHEMY_URL || '',
+  ALCHEMY_URL: process.env.ALCHEMY_URL || ''
 };
 
 const ROUTERS = {

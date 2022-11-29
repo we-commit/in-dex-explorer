@@ -19,4 +19,4 @@ const ALCHEMY_WS_PROVIDER = new WebSocketProvider(ALCHEMY_URL, network);
 const mempoolProviders: Array<any> = [INFURA_WS_PROVIDER];
 const confirmedProviders: Array<any> = [ALCHEMY_WS_PROVIDER];
 
-export { mempoolProviders, confirmedProviders, ETHERSCAN_PROVIDER, MAIN_WS_URL_PROVIDER,INFURA_WS_PROVIDER };
+export { mempoolProviders, confirmedProviders, ETHERSCAN_PROVIDER, MAIN_WS_URL_PROVIDER, INFURA_WS_PROVIDER };

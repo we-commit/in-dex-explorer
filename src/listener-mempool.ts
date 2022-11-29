@@ -34,7 +34,6 @@ const startListenPending = () => {
       timestampTx: nowMs()
     }).save(async (e: any) => {
       if (!e) {
-        _log.info('New', hash);
         const tx = await getPendingTxResponse(hash, mempoolProviders, ETHERSCAN_PROVIDER);
         if (tx) {
           const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
