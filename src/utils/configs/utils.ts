@@ -34,7 +34,7 @@ const KEYS = {
   BLOCKNATIVE_API_OPT: {
     headers: { Authorization: process.env.BLOCKNATIVE_API_KEY || '' }
   },
-  MAIN_WS_URL: process.env.MAIN_WS_URL || '',
+  QUICKNODE_URL: process.env.QUICKNODE_URL || '',
   INFURA_URL: process.env.INFURA_URL || '',
   ETHERSCAN_KEY: process.env.ETHERSCAN_KEY || '',
   ALCHEMY_URL: process.env.ALCHEMY_URL || ''

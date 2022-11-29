@@ -1,5 +1,5 @@
 import { startMongo, models } from './utils/mongo/config';
-import { ETHERSCAN_PROVIDER, MAIN_WS_URL_PROVIDER, confirmedProviders } from './utils/web3/providers';
+import { ETHERSCAN_PROVIDER, QUICKNODE_PROVIDER, confirmedProviders } from './utils/web3/providers';
 import { _log, timeout } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
@@ -36,7 +36,7 @@ startMongo(serverName).then(async (started) => {
 
 const listenRouter = async (filter: Array<any>) => {
   try {
-    MAIN_WS_URL_PROVIDER.on(
+    QUICKNODE_PROVIDER.on(
       {
         topics: filter
       },

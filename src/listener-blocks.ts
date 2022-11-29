@@ -1,6 +1,6 @@
 import { startMongo, models } from './utils/mongo/config';
 import { ENV, _log, KEYS, nowMs, timeout } from './utils/configs/utils';
-import { MAIN_WS_URL_PROVIDER } from './utils/web3/providers';
+import { QUICKNODE_PROVIDER } from './utils/web3/providers';
 import { getBlockInfo, getBlock } from './utils/web3/getBlocks';
 import { saveBlock, updateBlock } from './utils/mongo/saveBlock';
 
@@ -25,7 +25,7 @@ startMongo(serverName).then(async (started) => {
 const startBlocks = async () => {
   _log.start('startBlocks Go!');
 
-  MAIN_WS_URL_PROVIDER.on('block', async (number: any) => {
+  QUICKNODE_PROVIDER.on('block', async (number: any) => {
     proccessBlock(number);
   });
 };
@@ -33,7 +33,7 @@ const startBlocks = async () => {
 const proccessBlock = async (number: number) => {
   try {
     _log.info('New Block: ', ES_BLOCK + number);
-    const block = await getBlock(number, MAIN_WS_URL_PROVIDER);
+    const block = await getBlock(number, QUICKNODE_PROVIDER);
 
     if (block) {
       saveBlock({

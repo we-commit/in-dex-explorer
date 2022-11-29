@@ -1,5 +1,5 @@
 import { startMongo, models } from './utils/mongo/config';
-import { MAIN_WS_URL_PROVIDER, ETHERSCAN_PROVIDER, mempoolProviders } from './utils/web3/providers';
+import { QUICKNODE_PROVIDER, ETHERSCAN_PROVIDER, mempoolProviders } from './utils/web3/providers';
 import { nowMs, timeout, _log } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
@@ -27,7 +27,7 @@ startMongo(serverName).then(async (started) => {
 const startListenPending = () => {
   console.log('startListenPending');
 
-  MAIN_WS_URL_PROVIDER._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
+  QUICKNODE_PROVIDER._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
     new hashes({
       hash,
       txHash: hash,
