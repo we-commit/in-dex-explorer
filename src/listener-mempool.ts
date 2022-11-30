@@ -1,5 +1,5 @@
 import { startMongo, models } from './utils/mongo/config';
-import { QUICKNODE_PROVIDER, ETHERSCAN_PROVIDER, mempoolProviders } from './utils/web3/providers';
+import { MEMPOOL_PROVIDER } from './utils/web3/providers';
 import { nowMs, timeout, _log } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
@@ -27,17 +27,18 @@ startMongo(serverName).then(async (started) => {
 const startListenPending = () => {
   console.log('startListenPending');
 
-  QUICKNODE_PROVIDER._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
+  MEMPOOL_PROVIDER._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
     new hashes({
       hash,
       txHash: hash,
       timestampTx: nowMs()
     }).save(async (e: any) => {
+      _log.info(hash)
       if (!e) {
-        const tx = await getPendingTxResponse(hash, mempoolProviders, ETHERSCAN_PROVIDER);
+        const tx = await getPendingTxResponse(hash, MEMPOOL_PROVIDER);
         if (tx) {
           const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
-          pendingTx_uni_sushi(tx, whaleData, false, mempoolProviders);
+          pendingTx_uni_sushi(tx, whaleData, false, MEMPOOL_PROVIDER);
         }
       }
     });

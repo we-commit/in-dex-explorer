@@ -13,7 +13,7 @@ const { hashes } = g;
 
 const pName = 'qnPending_v3_multiswap';
 
-export const handleMultiSwap = async (tx: ITrojanTx, dexSpace: string, directConfirm: boolean, providers: Array<any>) => {
+export const handleMultiSwap = async (tx: ITrojanTx, dexSpace: string, directConfirm: boolean, provider: any) => {
   try {
     const { decodedData } = tx.mempoolData;
     let fromTokenAddress = '';
@@ -30,7 +30,7 @@ export const handleMultiSwap = async (tx: ITrojanTx, dexSpace: string, directCon
           }
           toTokenAddress = checkedPath[checkedPath.length - 1];
 
-          const tks = await getTokens(checkedPath, pName, dexSpace, providers);
+          const tks = await getTokens(checkedPath, pName, dexSpace, provider);
           if (tks && tks.length === checkedPath.length) {
             const innerCall = await getMempoolData(
               {

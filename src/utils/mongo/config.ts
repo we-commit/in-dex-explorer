@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
-import { _log, ENV } from '../configs/utils';
+import { _log, ENV, timeout } from '../configs/utils';
 import { BlockSchema } from '../../models/BlockSchema';
 import { TokenSchema } from '../../models/TokenSchema';
 import { TransactionSchema } from '../../models/TransactionSchema';
@@ -54,8 +54,10 @@ const checkMongo = (serverName: string) => {
     if (e) _log.error(`${serverName} | MONGO ERROR |  `, e.message);
   });
 
-  mongoose.connection.on('disconnected', () => {
+  mongoose.connection.on('disconnected', async () => {
     _log.error(`${serverName} | MONGO DISCONNECT | `);
+    await timeout(2000);
+    startMongo(serverName);
   });
 };
 
