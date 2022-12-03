@@ -1,9 +1,10 @@
 import { startMongo, models } from './utils/mongo/config';
-import { CONFIRMED_PROVIDER } from './utils/web3/providers';
-import { _log, timeout } from './utils/configs/utils';
+import { _log, timeout, KEYS } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
 import { pendingToConfirm, trashToConfirm } from './utils/mongo/saveConfirmed';
+import { ethers } from 'ethers';
+import { keepAlive } from './utils/web3/wsProvider';
 
 const { txM, g } = models;
 const { whales } = g;
@@ -23,54 +24,60 @@ startMongo(serverName).then(async (started) => {
     });
     await timeout(2000);
 
-    _log.start('SwapV3 listenRouter Go!');
-    listenRouter(SwapV3);
-    _log.start('SwapV2 listenRouter Go!');
-    listenRouter(SwapV2);
-    _log.start('SwV2SH listenRouter Go!');
-    listenRouter(SwV2SH);
+    _log.start('listenRouter UniSwap V3');
+    startListen(SwapV3);
+    _log.start('listenRouter UniSwap V2');
+    startListen(SwapV2);
+    _log.start('listenRouter Sushiswap V2');
+    startListen(SwV2SH);
   } else {
+    keepAlive;
     _log.error('---> started ', started);
   }
 });
 
-const listenRouter = async (filter: Array<any>) => {
-  try {
-    CONFIRMED_PROVIDER.on(
-      {
-        topics: filter
-      },
-      async (data: any) => {
-        const hash = data.transactionHash;
-        console.log('confirmed', hash);
-        const [knownTx_, knownTx_g_] = await Promise.all([txM.pending.findOne({ hash }, null, {}), g.trash.findOne({ hash }, null, {})]);
-        if (knownTx_) {
-          const knownTx = knownTx_._doc;
-          let nTx = { ...knownTx };
-          delete nTx._id;
-          pendingToConfirm(nTx, {}, serverName);
-          return;
-        }
+const startListen = (filter: Array<any>) => {
+  _log.info('startListen - Confirmend');
+  const provider = new ethers.providers.WebSocketProvider(KEYS.CONFIRMED_URL);
+  keepAlive({
+    provider,
+    onDisconnect: (err: any) => {
+      startListen(filter);
+      _log.error('The ws connection was closed', JSON.stringify(err, null, 2));
+    }
+  });
 
-        if (knownTx_g_) {
-          const knownTx_g = knownTx_g_._doc;
-          let nTx = { ...knownTx_g };
-          delete nTx._id;
-          trashToConfirm(nTx, {}, serverName);
-          return;
-        }
-
-        const tx = await getPendingTxResponse(hash,  CONFIRMED_PROVIDER);
-        if (tx) {
-          const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
-          pendingTx_uni_sushi(tx, whaleData, true, CONFIRMED_PROVIDER);
-        } else {
-          _log.error('getPendingTxResponse ', hash, 'not found confirmed tx?');
-        }
+  provider.on(
+    {
+      topics: filter
+    },
+    async (data: any) => {
+      const hash = data.transactionHash;
+      _log.info('confirmed', hash);
+      const [knownTx_, knownTx_g_] = await Promise.all([txM.pending.findOne({ hash }, null, {}), g.trash.findOne({ hash }, null, {})]);
+      if (knownTx_) {
+        const knownTx = knownTx_._doc;
+        let nTx = { ...knownTx };
+        delete nTx._id;
+        pendingToConfirm(nTx, {}, serverName);
+        return;
       }
-    );
-  } catch (e: any) {
-    _log.error('listen V2 catch ', e);
-  }
-  return;
+
+      if (knownTx_g_) {
+        const knownTx_g = knownTx_g_._doc;
+        let nTx = { ...knownTx_g };
+        delete nTx._id;
+        trashToConfirm(nTx, {}, serverName);
+        return;
+      }
+
+      const tx = await getPendingTxResponse(hash, provider);
+      if (tx) {
+        const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
+        pendingTx_uni_sushi(tx, whaleData, true, provider);
+      } else {
+        _log.error('getPendingTxResponse ', hash, 'not found confirmed tx?');
+      }
+    }
+  );
 };

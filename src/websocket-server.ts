@@ -86,7 +86,7 @@ const joinToBlocks = (socket: Socket<any>) => {
     try {
       const { id } = socket;
       const { _doc } = await g.blocks.findOne({ fullyUpdated: true }, null, { sort: { timestampTx: -1 } });
-      console.log('_doc', _doc);
+      _log.info('_doc', _doc);
       if (_doc) explorerNS.to(id).emit('last_block', _doc);
     } catch (e: any) {
       _log.error('join_to_blocks catch', e);

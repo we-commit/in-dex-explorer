@@ -30,7 +30,7 @@ startMongo(serverName).then(async (started) => {
 });
 
 const startFixerJustKill = async () => {
-  const old_txs = 7;
+  const old_txs = 4;
 
   let end = new Date();
   end.setMinutes(new Date().getMinutes() - old_txs);

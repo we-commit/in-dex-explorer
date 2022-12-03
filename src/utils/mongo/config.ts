@@ -27,7 +27,7 @@ const params = {
 };
 
 process.on('uncaughtException', function (err) {
-  console.log('uncaughtException', err);
+  _log.info('uncaughtException', err);
 });
 
 process.on('unhandledRejection', (reason, p) => {
