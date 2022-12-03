@@ -1,13 +1,13 @@
 import { ethers } from 'ethers';
-import { checksum, getRandomInt, _log } from '../configs/utils';
+import { checksum, _log } from '../configs/utils';
 import { erc20abi } from './abis-interfaces';
 import { MAINNET } from './utils';
 
-const getContractData = async (contractAddress: string, providers: Array<any>): Promise<any> => {
+const getContractData = async (contractAddress: string, provider: any): Promise<any> => {
   try {
     const address = checksum(contractAddress);
 
-    const contract = new ethers.Contract(address, erc20abi, providers[0]);
+    const contract = new ethers.Contract(address, erc20abi, provider);
 
     const [decimals, name, symbol] = await Promise.all([contract.functions.decimals(), contract.functions.name(), contract.functions.symbol()]);
 

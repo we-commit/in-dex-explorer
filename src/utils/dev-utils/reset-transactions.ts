@@ -19,9 +19,7 @@ const startServer = () => {
 const start = async () => {
   _log.start(serverName);
   await models.txM.pending.deleteMany({}, {});
-
   await models.txM.confirmed.deleteMany({}, {});
-
   await models.g.trash.deleteMany({}, {});
   await models.g.hashes.deleteMany({}, {});
   _log.ready('done');

@@ -23,7 +23,7 @@ const newTokenSushi = (data: any): TokenSushi | null => {
   return null;
 };
 
-const getTokens = async (checkedPath: Array<string>, pName: string, dexSpace: string, providers: Array<any>) => {
+const getTokens = async (checkedPath: Array<string>, pName: string, dexSpace: string, provider: any) => {
   try {
     if (checkedPath && pName && dexSpace) {
       let tks = [];
@@ -39,7 +39,7 @@ const getTokens = async (checkedPath: Array<string>, pName: string, dexSpace: st
           const t = await models.g.tokens.findOne({ address }, null, {});
 
           if (!t) {
-            const contractToken = await getContractData(address, providers);
+            const contractToken = await getContractData(address, provider);
             if (contractToken) {
               if (dexSpace === 'v2sh') {
                 tks.push(newTokenSushi(contractToken));

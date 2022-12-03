@@ -11,7 +11,7 @@ const dexSpacev2 = 'v2';
 const dexSpacev3 = 'v3';
 const dexSpacev2sh = 'v2sh';
 
-export const proccessPending = async (tx: TransactionResponse, whaleData: any, directConfirm: boolean, providers: Array<any>) => {
+export const proccessPending = async (tx: TransactionResponse, whaleData: any, directConfirm: boolean, provider: any) => {
   try {
     const isUniSpaceV2 = tx.to === ROUTERS.UNIV2;
     const isSushiSpaceV2 = tx.to === ROUTERS.SUSHIV2;
@@ -43,13 +43,13 @@ export const proccessPending = async (tx: TransactionResponse, whaleData: any, d
               decodedData: parsedTx.args[0]
             }
           };
-          txMethod === _MULTICALL ? handleMultiSwapV3(nTx, dexSpace, directConfirm, providers) : handleSwapV3(nTx, dexSpace, directConfirm, providers);
+          txMethod === _MULTICALL ? handleMultiSwapV3(nTx, dexSpace, directConfirm, provider) : handleSwapV3(nTx, dexSpace, directConfirm, provider);
         } else if (txMethod.includes('swap')) {
           const nTx = {
             ...checkTx(tx, whaleData, isUniSpaceV2, false, isSushiSpaceV2),
             mempoolData: { txMethod, decodedData: parsedTx.args, checkedPath: parsedTx.args['path'] }
           };
-          handleSwapV2(nTx, dexSpace, directConfirm, providers);
+          handleSwapV2(nTx, dexSpace, directConfirm, provider);
         }
       } else {
         _log.warn(`proccessPending cant parse tx?`, tx.hash);

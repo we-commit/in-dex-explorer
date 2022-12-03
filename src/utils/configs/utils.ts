@@ -34,10 +34,11 @@ const KEYS = {
   BLOCKNATIVE_API_OPT: {
     headers: { Authorization: process.env.BLOCKNATIVE_API_KEY || '' }
   },
-  MAIN_WS_URL: process.env.MAIN_WS_URL || '',
+  BLOCKS_URL: process.env.BLOCKS_URL || '',
+  MEMPOOL_URL: process.env.MEMPOOL_URL || '',
+  CONFIRMED_URL: process.env.CONFIRMED_URL || '',
   INFURA_URL: process.env.INFURA_URL || '',
-  ETHERSCAN_KEY: process.env.ETHERSCAN_KEY || '',
-  ALCHEMY_URL: process.env.ALCHEMY_URL || '',
+  ALCHEMY_URL: process.env.ALCHEMY_URL || ''
 };
 
 const ROUTERS = {

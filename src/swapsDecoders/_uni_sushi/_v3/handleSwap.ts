@@ -13,7 +13,7 @@ const { hashes } = g;
 const { EI, EIS, EO, EOS } = V3_SWAP_FNAME;
 const pName = 'qnPending_v3_swap';
 
-export const handleSwap = async (tx: ITrojanTx, dexSpace: string, directConfirm: boolean, providers: Array<any>) => {
+export const handleSwap = async (tx: ITrojanTx, dexSpace: string, directConfirm: boolean, provider: any) => {
   try {
     const { txMethod, decodedData } = tx.mempoolData;
     let fromTokenAddress = '';
@@ -38,7 +38,7 @@ export const handleSwap = async (tx: ITrojanTx, dexSpace: string, directConfirm:
     checkedPath.push(toTokenAddress);
 
     if (checkedPath.length > 0) {
-      const tks = await getTokens(checkedPath, pName, dexSpace, providers);
+      const tks = await getTokens(checkedPath, pName, dexSpace, provider);
       if (tks && tks.length === checkedPath.length) {
         const mempoolData = await getMempoolData(
           {

@@ -1,8 +1,8 @@
 import { _log } from '../configs/utils';
 
-const getPendingTxResponse = async (hash: string, providers: Array<any>, escan: any) => {
+const getPendingTxResponse = async (hash: string, provider: any) => {
   try {
-    const _txResponse = await getFromBackupProviders(hash, providers, escan);
+    const _txResponse = await getFromProviders(hash, provider);
     return _txResponse;
   } catch (e: any) {
     _log.error('getPendingTxResponse catch ', hash);
@@ -10,9 +10,9 @@ const getPendingTxResponse = async (hash: string, providers: Array<any>, escan: 
   return null;
 };
 
-const getFromBackupProviders = async (hash: string, providers: Array<any>, escan: any) => {
+const getFromProviders = async (hash: string, provider: any) => {
   try {
-    const txResponse = await goGetIt(hash, providers, escan);
+    const txResponse = await goGetIt(hash, provider);
     if (txResponse) {
       const { to, from } = txResponse;
       if (to && from) {
@@ -21,7 +21,7 @@ const getFromBackupProviders = async (hash: string, providers: Array<any>, escan
     }
   } catch (e: any) {
     if (e.message === 'noNetwork') {
-      const txResponse = await goGetIt(hash, providers, escan);
+      const txResponse = await goGetIt(hash, provider);
       if (txResponse) {
         const { to, from } = txResponse;
         if (to && from) {
@@ -33,20 +33,16 @@ const getFromBackupProviders = async (hash: string, providers: Array<any>, escan
   return null;
 };
 
-const goGetIt = async (hash: string, providers: Array<any>, escan: any) => {
-  const l = providers.length - 1;
-
-  for (let i = l; i >= 0; i--) {
-    try {
-      let _txResponse = await providers[i].getTransaction(hash);
-      if (_txResponse) return _txResponse;
-    } catch (e: any) {
-      _log.info(e.message);
-    }
+const goGetIt = async (hash: string, provider: any) => {
+  try {
+    let _txResponse = await provider.getTransaction(hash);
+    if (_txResponse) return _txResponse;
+  } catch (e: any) {
+    _log.info(e.message);
   }
 
   try {
-    let _txResponse = await escan.getTransaction(hash);
+    let _txResponse = await provider.getTransaction(hash);
     if (_txResponse) return _txResponse;
   } catch (e: any) {
     _log.info(e.message);

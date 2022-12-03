@@ -19,9 +19,7 @@ const startServer = () => {
 const start = async () => {
   _log.start(serverName);
   await models.txM.pending.collection.drop();
-
   await models.txM.confirmed.collection.drop();
-
   await models.g.hashes.collection.drop();
   await models.g.trash.collection.drop();
   _log.ready('done');
