@@ -147,11 +147,12 @@ URL=wss://mainnet.infura.io/ws/v3/99999999999999
 
 # a list of several providers key used to get transaction data, tokens, pools, etc.
 # as we run listener in separated server origins (MEMPOOL LISTENER, BLOCK LISTENER AND CONFIRMATION LISTENER)
-# we use 4 infura free keys from different accounts, to avoid rate and daily call limits.
 
-INFURA_URL=9999999999999999999999999999999999999999999999999999
-#same for alchemy (MEMPOOL LISTENER, AND CONFIRMATION LISTENER)
-ALCHEMY_URL=9999999999999999999999999999999999999999999999999999
+BLOCKS_URL=wss://emerald-emerald-emerald.quiknode.pro/99999999999999999999999999999/
+MEMPOOL_URL=wss://emerald-emerald-emerald.quiknode.pro/99999999999999999999999999999/
+CONFIRMED_URL=wss://emerald-emerald-emerald.quiknode.pro/99999999999999999999999999999/
+INFURA_URL=wss://mainnet.infura.io/ws/v3/99999999999999999999999999999
+ALCHEMY_URL=wss://eth-mainnet.g.alchemy.com/v2/99999999999999999999999999999
 
 # !!! IMPORTANT !!! DEX router address, used to check if a new transaction is a DEX transaction.
 UNIV2=0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
@@ -162,7 +163,6 @@ SUSHIV2=0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F
 # this saves a lot of calls to the network as we need token data like **decimals** to decode and parse swaps amounts correctly.
 
 WRAPPED=https://wrapped.tokensoft.eth.link/
-YEARN=https://yearn.science/static/tokenlist.json
 ROLL=https://app.tryroll.com/tokens.json
 SUSHISWAP=https://raw.githubusercontent.com/sushiswapclassic/token-list/master/sushiswap.tokenlist.json
 ONE_INCH=https://tokens.1inch.eth.link
@@ -187,8 +187,6 @@ UMA=https://umaproject.org/uma.tokenlist.json
 BAZAR=https://raw.githubusercontent.com/EthereansOS/Organizations-Interface/master/bazar-tokens-list/dist/decentralizedFlexibleOrganizations.json
 ZERION=https://tokenlist.zerion.eth.link
 
-# used only locally to init heroku apps and set environment variables automatically.
-#HEROKU_APP_NAME=in-dex-explorer-*
 
 # used to build the front on heroku, this env vars are used in set-heroku script
 # at the moment heroku build the client.
