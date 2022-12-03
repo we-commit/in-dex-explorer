@@ -143,7 +143,7 @@ BLOCKNATIVE_API_URL=https://api.blocknative.com/gasprices/blockprices
 BLOCKNATIVE_API_KEY=9999999999999999999999999999999999999999999999999999
 
 # this is the main websocket provider FULL URL, used to listen to the events of the network.
-QUICKNODE_URL=wss://mainnet.infura.io/ws/v3/99999999999999
+URL=wss://mainnet.infura.io/ws/v3/99999999999999
 
 # a list of several providers key used to get transaction data, tokens, pools, etc.
 # as we run listener in separated server origins (MEMPOOL LISTENER, BLOCK LISTENER AND CONFIRMATION LISTENER)

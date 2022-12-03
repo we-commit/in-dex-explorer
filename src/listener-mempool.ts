@@ -33,7 +33,6 @@ const startListenPending = () => {
       txHash: hash,
       timestampTx: nowMs()
     }).save(async (e: any) => {
-      _log.info(hash)
       if (!e) {
         const tx = await getPendingTxResponse(hash, MEMPOOL_PROVIDER);
         if (tx) {
