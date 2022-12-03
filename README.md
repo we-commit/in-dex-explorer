@@ -1,4 +1,4 @@
-# Mono Repo for Trojan Finance.
+# Trojan Finance.
 
 A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Uniswap** and **Sushiswap**.
 
