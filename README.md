@@ -2,7 +2,6 @@
 
 A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Uniswap** and **Sushiswap**.
 
-- https://app.trojan.finance/#/explorer
   <br></br>
   <img  style="margin-left:10rem" src="./_assets/1.gif">
   
