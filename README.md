@@ -2,19 +2,25 @@
 
 A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Uniswap** and **Sushiswap**.
 
-  <br></br>
-  <img  style="margin-left:10rem" src="./_assets/1.gif">
-  
+<br></br>
+<img  style="margin-left:10rem" src="./_assets/1.gif">
+
 # Main Features.
 
 ## **Live Mempool**.
 
+<details><summary>Details</summary>
+<p>
 It includes mempool (pendingTxs) transactions so you can be aware of incoming movements, **that for example**, may impact in a token price.
 
 We take the mempool **input data** for every **new pending transaction**, we decode it to get the target DEX router (univ2 univ3 sushiswap), the tokens and pools involved in the swap, the swap route, the swap method, the swap **inputs** and **outputs** amounts. With this data we classify txs and store them in a backend **database** connected to websocket server that monitor and publish every new pending transaction and their **failed/confirmed/dropped/replaced** changes.
 
+</p></details>
+
 ## **Real Time Updates**
 
+<details><summary>Details</summary>
+<p>
 The mempool interface run with real time updates, so you can be aware of some kind of "extendend network state"... like watching the future transactions to be included (or not) in the confirmed netwrok state.
 
 In terms of a DEX Swap over a token pair/pool this mean a new impact on it, changing the price (in some cases) of a token in the exosystem.
@@ -27,13 +33,13 @@ This give the user (a defi trader) a better idea of **what its really happening 
 
 Look at the difference between the following tokens, and get your own idea.
 
-- An always **HOT** token (really fast updates), all TXs involving WETH: https://app.trojan.finance/#/explorer?inputCurrency=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+- An always **HOT** token (really fast updates), all TXs involving WETH: https://trojan.theoffshore.io/#/explorer?inputCurrency=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
 
-- A not so **HOT** token (not so fast updates) , all TXs involving DAI: https://app.trojan.finance/#/explorer?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F
+- A not so **HOT** token (not so fast updates) , all TXs involving DAI: https://trojan.theoffshore.io/#/explorer?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F
 
-- A not so **HOT** token (not so fast updates) , all TXs involving USDC: https://app.trojan.finance/#/explorer?inputCurrency=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
+- A not so **HOT** token (not so fast updates) , all TXs involving USDC: https://trojan.theoffshore.io/#/explorer?inputCurrency=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
 
-- A **NOT_HOT** token, TXs involving LINK: https://app.trojan.finance/#/explorer?inputCurrency=0x514910771AF9Ca656af840dff83E8264EcF986CA
+- A **NOT_HOT** token, TXs involving LINK: https://trojan.theoffshore.io/#/explorer?inputCurrency=0x514910771AF9Ca656af840dff83E8264EcF986CA
 
   ### Examples.
 
@@ -49,27 +55,31 @@ Look at the difference between the following tokens, and get your own idea.
 
 - ### **Among a lot of other scenarios, its on the user (you) to discover and decide how to use Trojan Finance.**
 
-## **Token / ETH Prices**
+### **Token / ETH Prices**
 
 The interface uses the **Uniswap SDK** to get the prices of all tokens listed in the explorer.
 
-## **Block Information**
+### **Block Information**
 
 We query **gas now** and **blocknative API** to get latest and next block information.
 
-## **Token / Transaction Links**
+### **Token / Transaction Links**
 
 The interface generate a couple of usefull links for the selected token and the showed transactions, so you can easily see the transaction details in etherscan and validate it.
 
-## **Known Address in TX Tags**
+### **Known Address in TX Tags**
 
 The interface shows a TAG in the transaction header of the explorer, in case a known whale address is involved in the transaction.
 We use sibil list to import some public / verified users from https://raw.githubusercontent.com/Uniswap/sybil-list/master/verified.json.
 
 _We are looking for a way to import more whales addresses from other sources._
 
-## Backend....
+</p></details>
 
+## **Backend**
+
+<details><summary>Details</summary>
+<p>
 There are some usefull things trojan does in the backend... hope you can discover them but just to start i can post the first one.
 
 - Tokens. after the app start runing, listening all the swap trades, some times they got new tokens related, and we dont have the token data, so we go and get the token information from the network and we add it to our database, you can realize that this happends usually when a new token its created in the network (recetly added or deployed on main net) so you can actually be aware of all new tokens beign swapped in uniswap and get an opportunity to jump in a good project ... =)
@@ -77,6 +87,8 @@ There are some usefull things trojan does in the backend... hope you can discove
 - In a similar way for every tx , trojan inspect the addresses related , from, receiver, to, etc, and tag them if they are knows, so you can actually be aware to, for example, when a whale wake up ...
 
 - etc .....
+</p></details>
+<br>
 
 # Running.
 
@@ -95,32 +107,16 @@ Use nodejs v14.16.1+ and run with yarn.
 
 ## **MongoDB**
 
-Create an account, follow the instructions and create a free database using a shared cluster.
-
-Wait a few minutes so the databaseis available.
-
-Create a user and get the connection information to later set the ATLAS_STRING .env variable and connect to the database.
+Gget the connection information to later set the ATLAS_STRING .env variable and connect to the database.
 
 - MongoDB Cluster: https://www.mongodb.com/cloud/atlas/register
 
-- You can use you own mongo instance, but need replica set oplog for mongo listeners. https://docs.mongodb.com/manual/core/replica-set-oplog/
-  In my oppinion its the fastest way to have a cetralized data feed that can notify in real time to any external service about any modification on it.
-  This is important as we need a way to really fast send new pending tx data to the front, and change the tx status when its necesary. _And actually hook to this any other service like a trading bot, a telegram notification script, slack ... etc._
+- You can use you own mongo instance, but need replica set oplog for mongo listeners. 
 
-## **Api Providers**
+# Environment file.
 
-Get at least 1 key from each provider.
-
-- https://dashboard.alchemyapi.io/
-- https://infura.io/
-- https://etherscan.io/myapikey/
-- https://www.blocknative.com/
-
-# Check .sample-env and create .env file.
-
-- We got TWO .env Files to create.
-
-## ./.env In the root folder.
+<details><summary>.env In the root folder.</summary>
+<p>
 
 ```
 # serverUser pass _ID1_ _DB_NAME_ _ID2_
@@ -198,7 +194,10 @@ REACT_APP_APP_IS_OFFLINE=false
 SKIP_PREFLIGHT_CHECK=true
 ```
 
-## ./client/.env In the client folder
+</p>
+</details>
+
+<details><summary>./client/.env In the client folder.</summary>
 
 ```
 REACT_APP_CHAIN_ID=1
@@ -208,6 +207,10 @@ REACT_APP_WS_URL_TROJAN=http://localhost:3001/
 REACT_APP_APP_IS_OFFLINE=false
 SKIP_PREFLIGHT_CHECK=true
 ```
+
+</p>
+</details>
+<br>
 
 # Runing init scripts.
 
@@ -223,26 +226,26 @@ SKIP_PREFLIGHT_CHECK=true
 - In the root folder again. Connect to mongodb, create DB, create collections and indexes as required.
 
   ```
-  yarn ci
+    yarn create-indexes
 
-  "ci": "ts-node ./src/utils/initServer/create-indexes.ts"
+    "create-indexes": "ts-node ./src/utils/initServer/create-indexes.ts",
   ```
 
 - Import some known tokens and pools. To get a database with the initial data.
 
   ```
-  yarn it && yarn ip
+  yarn init-pools && yarn init-tokens
 
-  "it": "ts-node ./src/utils/initServer/init-tokens.ts"
-  "ip": "ts-node ./src/utils/initServer/init-pools.ts"
+  "init-tokens": "ts-node ./src/utils/initServer/init-tokens.ts",
+  "init-pools": "ts-node ./src/utils/initServer/init-pools.ts",
   ```
 
 - Import known addres, to get a sample data base to tag transactions with a known user tag.
 
   ```
-  yarn iw
+  yarn init-whales
 
-  "iw": "ts-node ./src/utils/initServer/init-whales.ts",
+  "init-whales": "ts-node ./src/utils/initServer/init-whales.ts",
   ```
 
   `All these steps are required to start the app. This can take some time, specially on tokens and pools, for pools we scan factories from creation block up to the latest, so pretty much lot of blocks, but if you need a fast way to get and validate pools addresses and information this is really usefull. And same for token decimals and data.`
@@ -251,12 +254,17 @@ SKIP_PREFLIGHT_CHECK=true
 
 Having the ./.env file created, go to the repo root folder and run:
 
+```
+yarn build-all
+
+```
+
 - Block Listener:
 
 Start some common but not less important tasks. As blocks information and clear cache tables. Start and wait to get a couple of blocks information.
 
 ```
-yarn lcs # "lcs": "ts-node-dev ./src/listener-commons.ts",
+yarn blocks
 ```
 
 - Mempool Listener:
@@ -265,7 +273,7 @@ Start a pending mempool listener. Used to get the new txs, filter by dex swap, a
 This is like the most expensive task, as it must get all the network incoming transactions hashes, get the transactionResponse (details), and classify it.
 
 ```
-yarn lm # "lm": "ts-node-dev ./src/listener-mempool.ts",
+yarn mempool
 ```
 
 - Confirmation Listener.
@@ -273,7 +281,7 @@ yarn lm # "lm": "ts-node-dev ./src/listener-mempool.ts",
 Start an event listener, filtering by router address and swap event topic. Getting for each confirmed block, all the confirmation events and transaction related, updating the pending transaction status as correpond.
 
 ```
-yarn lc # "lc": "ts-node-dev ./src/listener-confirmation.ts",
+yarn confirmed
 ```
 
 - Start **Websocket** and **App Client** server.
@@ -284,82 +292,8 @@ Every time a tx its writen or modified in mongo, the oplog will inform that acti
 It also expose the client_build app to the public.
 
 ```
-yarn web # "web": "ts-node-dev ./src/\_websocket-server.ts"
+yarn websocket
 ```
-
-# Start Front end App.
-
-Having the ./client/.env file created, go to the client folder and run:
-
-```
-yarn install && yarn start:c
-```
-
-- After first time start you can just run yarn start, start:c its just used to compile some contract types.
-
-```
-yarn start
-```
-
-- At this point you have the app runing over **http://localhost:3000** in development mode, with react scripts.
-
-# Build Server & Client App
-
-With .env setted on heroku or in your server.
-
-Just run the build script in the root folder, it will remove old build folders, install deps for client app, build the app and move it to the root folder to be available for the server and expose the ./client_build app in express.
-
-```
-    yarn install && yarn build
-```
-
-Check the internal build scripts:
-
-```
-    # ./package.json build script:
-
-    #"build": "cd client && yarn build && cd .. && tsc",
-
-    # ./client/package.json build script
-
-    # "build": "rm -rf ../client_build && yarn && yarn compile-contract-types && react-scripts build && mv build ../#client_build",
-
-```
-
-This will go to the client folder,remove old client_build, install deps for client, compile contract types, react-script build and move it to the root dir.
-Allowing the express server to serve the client.
-
-- Finally start the app runing the build server and client projects.
-
-```
-    yarn web-worker
-    yarn worker-a
-    yarn worker-b
-    yarn worker-c
-```
-
-Check the scripts, used to test locally and check if the builds are correct.
-
-```
-    "web-worker": "node ./dist/_websocket-server.js",
-    "worker-a": " node ./dist/listener-commons.js",
-    "worker-b": "node ./dist/listener-mempool.js",
-    "worker-c": "node ./dist/listener-confirmation.js"
-```
-
-Check the Procfile for heroku workers.
-
-```
-web: node ./dist/_websocket-server.js
-worker-a: node ./dist/listener-commons.js
-worker-b: node ./dist/listener-mempool.js
-worker-c: node ./dist/listener-confirmation.js
-
-```
-
-# Restrictions !! 🐶
-
-For now it works only for _Ethereum_ _Main_ _Net_.
 
 ```
 Cheers! 🐶
@@ -370,10 +304,3 @@ Cheers! 🐶
 Jump in...
 
 - https://github.com/offshoredao
-
-<ul class="">
-   <li> <a target="_blank"  href="https://discord.gg/VZkFP78aeF">Discord</a> </li>
-   <li> <a target="_blank"  href="https://twitter.com/FinanceTrojan">Twitter</a> </li>
-   <li> <a target="_blank"  href="https://medium.com/@trojanfinance">Medium</a></li>
-   <li> <a target="_blank"  href="https://github.com/we-commit">Github</a></li>
-</ul>
