@@ -1,8 +1,9 @@
 import { startMongo, models } from './utils/mongo/config';
 import { ENV, _log, KEYS, nowMs, timeout } from './utils/configs/utils';
-import { BLOCKS_PROVIDER } from './utils/web3/providers';
 import { getBlockInfo, getBlock } from './utils/web3/getBlocks';
 import { saveBlock, updateBlock } from './utils/mongo/saveBlock';
+import { ethers } from 'ethers';
+import { keepAlive } from './utils/web3/wsProvider';
 
 const { BLOCKNATIVE_API_URL, GAS_STATION_API_URL, BLOCKNATIVE_API_OPT, GAS_STATION_API_OPT } = KEYS;
 const { ES_BLOCK } = ENV;
@@ -12,7 +13,7 @@ const serverName = 'qnCommons';
 startMongo(serverName).then(async (started) => {
   await timeout(5000);
   if (started) {
-    startBlocks();
+    startListen();
 
     setInterval(() => {
       proccessBlockQueue();
@@ -22,18 +23,19 @@ startMongo(serverName).then(async (started) => {
   }
 });
 
-const startBlocks = async () => {
-  _log.start('startBlocks Go!');
-
-  BLOCKS_PROVIDER.on('block', async (number: any) => {
-    proccessBlock(number);
+const startListen = async () => {
+  _log.start('startListen - Blocks');
+  const provider = new ethers.providers.WebSocketProvider(KEYS.CONFIRMED_URL);
+  keepAlive({
+    provider,
+    onDisconnect: (err) => {
+      startListen();
+      console.error('The ws connection was closed', JSON.stringify(err, null, 2));
+    }
   });
-};
 
-const proccessBlock = async (number: number) => {
-  try {
-    _log.info('New Block: ', ES_BLOCK + number);
-    const block = await getBlock(number, BLOCKS_PROVIDER);
+  provider.on('block', async (number: any) => {
+    const block = await getBlock(number, provider);
 
     if (block) {
       saveBlock({
@@ -45,10 +47,7 @@ const proccessBlock = async (number: number) => {
         by: serverName
       });
     }
-  } catch (e: any) {
-    _log.error('ProccessBlock catch ', number, e);
-  }
-  return;
+  });
 };
 
 const proccessBlockQueue = async () => {

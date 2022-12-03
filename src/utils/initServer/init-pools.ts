@@ -1,7 +1,6 @@
 import { ethers } from 'ethers';
 import { models, startMongo } from '../mongo/config';
-import { checksum, nowMs, timeout, _log } from '../configs/utils';
-import { BLOCKS_PROVIDER } from '../web3/providers';
+import { checksum, KEYS, nowMs, timeout, _log } from '../configs/utils';
 import { savePools } from '../mongo/savePools';
 
 const serverName = 'initPools';
@@ -29,6 +28,8 @@ startMongo(serverName).then((started) => {
 const startAddPoolsGet = async (fromBlock: any, lastBlock: any, dex: string, factory: any, filterTopics: any) => {
   try {
     _log.info('startAddPoolsGet fromBlock lastBlock dex', fromBlock, lastBlock, dex);
+    const provider = new ethers.providers.WebSocketProvider(KEYS.CONFIRMED_URL);
+
     const toBlock = fromBlock + 100000;
     const filter = {
       address: factory,
@@ -36,7 +37,7 @@ const startAddPoolsGet = async (fromBlock: any, lastBlock: any, dex: string, fac
       toBlock: toBlock >= lastBlock ? 'latest' : toBlock,
       topics: [filterTopics]
     };
-    const result = await BLOCKS_PROVIDER.getLogs(filter);
+    const result = await provider.getLogs(filter);
 
     if (result)
       for (const r of result) {
@@ -75,7 +76,8 @@ const startAddPoolsGet = async (fromBlock: any, lastBlock: any, dex: string, fac
 
 const startAddPools = async () => {
   try {
-    const lastBlock = await BLOCKS_PROVIDER.getBlockNumber();
+    const provider = new ethers.providers.WebSocketProvider(KEYS.CONFIRMED_URL);
+    const lastBlock = await provider.getBlockNumber();
 
     const pv2 = await g.pools.findOne({ isV2: true }, null, { sort: { blockNumber: -1 } });
     const pv3 = await g.pools.findOne({ isV3: true }, null, { sort: { blockNumber: -1 } });

@@ -1,6 +1,5 @@
 import { get } from 'https';
-import { BLOCKS_PROVIDER } from './providers';
-import { _log } from '../configs/utils';
+import { KEYS, _log } from '../configs/utils';
 
 const getBlock = async (number: number, provider: any) => {
   try {
@@ -19,7 +18,7 @@ const getFromBackupProviders = async (number: number, provider: any) => {
     }
   } catch (e: any) {
     if (e.message === 'noNetwork') {
-      const blockResponse = await goGetIt(BLOCKS_PROVIDER, number);
+      const blockResponse = await goGetIt(KEYS.ALCHEMY_URL, number);
       if (blockResponse) {
         return blockResponse;
       }

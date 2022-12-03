@@ -1,8 +1,9 @@
 import { startMongo, models } from './utils/mongo/config';
-import { MEMPOOL_PROVIDER } from './utils/web3/providers';
-import { nowMs, timeout, _log } from './utils/configs/utils';
+import { KEYS, nowMs, timeout, _log } from './utils/configs/utils';
 import { getPendingTxResponse } from './utils/web3/getTransactions';
 import { proccessPending as pendingTx_uni_sushi } from './swapsDecoders/_uni_sushi/pending';
+import { ethers } from 'ethers';
+import { keepAlive } from './utils/web3/wsProvider';
 
 const { g } = models;
 const { whales, hashes } = g;
@@ -18,26 +19,34 @@ startMongo(serverName).then(async (started) => {
       if (!e) whalesCache = docs;
     });
 
-    startListenPending();
+    startListen();
   } else {
     _log.warn('---> started ', started);
   }
 });
 
-const startListenPending = () => {
-  console.log('startListenPending');
+const startListen = () => {
+  _log.info('startListen - Mempool');
+  const provider = new ethers.providers.WebSocketProvider(KEYS.CONFIRMED_URL);
+  keepAlive({
+    provider,
+    onDisconnect: (err) => {
+      startListen();
+      _log.error('The ws connection was closed', JSON.stringify(err, null, 2));
+    }
+  });
 
-  MEMPOOL_PROVIDER._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
+  provider._subscribe('pending', ['newPendingTransactions'], async (hash: string) => {
     new hashes({
       hash,
       txHash: hash,
       timestampTx: nowMs()
     }).save(async (e: any) => {
       if (!e) {
-        const tx = await getPendingTxResponse(hash, MEMPOOL_PROVIDER);
+        const tx = await getPendingTxResponse(hash, provider);
         if (tx) {
           const whaleData = whalesCache.find((w) => (w ? w.address.toLowerCase() === tx.from.toLowerCase() : false));
-          pendingTx_uni_sushi(tx, whaleData, false, MEMPOOL_PROVIDER);
+          pendingTx_uni_sushi(tx, whaleData, false, provider);
         }
       }
     });
