@@ -22,21 +22,15 @@ export default function Polling() {
   if (scrollY <= 45)
     return (
       <HeaderRowT>
-        <ExternalLink style={footerStyles} href={"https://discord.gg/VZkFP78aeF"}>
+        <ExternalLink style={footerStyles} href={"https://discord.com/invite/offshore"}>
           <TYPE.small>Discord</TYPE.small>
         </ExternalLink>
-        <ExternalLink style={footerStyles} href={"https://medium.com/@trojanfinance"}>
-          <TYPE.small>Medium</TYPE.small>
-        </ExternalLink>
-        <ExternalLink style={footerStyles} href={"https://twitter.com/FinanceTrojan"}>
+        <ExternalLink style={footerStyles} href={"https://twitter.com/offshoredao"}>
           <TYPE.small>Twitter</TYPE.small>
         </ExternalLink>
         <ExternalLink style={footerStyles} href={"https://github.com/we-commit"}>
           <TYPE.small>Github</TYPE.small>
         </ExternalLink>
-        <TYPE.small style={{ marginLeft: "0.5rem" }} color={"#6C7284"}>
-          Proposals (Soon)
-        </TYPE.small>
       </HeaderRowT>
     )
   else {

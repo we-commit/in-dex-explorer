@@ -27,18 +27,15 @@ export default function Maintenance({}) {
                   <CardSection>
                     <AutoColumn gap="md">
                       <Text fontWeight={500} fontSize={16}>
-                        <br></br> Sorry for the inconvenience but we are performing some maintenance at the moment, we
-                        will be back very soon.<br></br>
+                        {"Trojan is currently under maintenance -- It'll be back shortly."}
                       </Text>
-
                       <UniIcon>
                         <img width={"30%"} src={LogoDark} alt="logo" />
                       </UniIcon>
                       <Text fontWeight={400} fontSize={14}>
-                        <br></br> Jump on discord to stay tuned.. <br></br>
-                        <br></br> We are stronger together. <br></br>
+                        Trojan is part of the Offshore DAO 🏝
                       </Text>
-                      <ExternalLink href={"https://discord.gg/VZkFP78aeF"}>[Discord]</ExternalLink>
+                      <ExternalLink href={"https://discord.com/invite/offshore"}>[Discord]</ExternalLink>
                     </AutoColumn>
                   </CardSection>
                 </DataCard>
