@@ -33,13 +33,13 @@ This give the user (a defi trader) a better idea of **what its really happening 
 
 Look at the difference between the following tokens, and get your own idea.
 
-- An always **HOT** token (really fast updates), all TXs involving WETH: https://trojan.theoffshore.io/#/explorer?inputCurrency=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+- An always **HOT** token (really fast updates), all TXs involving WETH: https://trojan.finance/#/explorer?inputCurrency=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
 
-- A not so **HOT** token (not so fast updates) , all TXs involving DAI: https://trojan.theoffshore.io/#/explorer?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F
+- A not so **HOT** token (not so fast updates) , all TXs involving DAI: https://trojan.finance/#/explorer?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F
 
-- A not so **HOT** token (not so fast updates) , all TXs involving USDC: https://trojan.theoffshore.io/#/explorer?inputCurrency=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
+- A not so **HOT** token (not so fast updates) , all TXs involving USDC: https://trojan.finance/#/explorer?inputCurrency=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
 
-- A **NOT_HOT** token, TXs involving LINK: https://trojan.theoffshore.io/#/explorer?inputCurrency=0x514910771AF9Ca656af840dff83E8264EcF986CA
+- A **NOT_HOT** token, TXs involving LINK: https://trojan.finance/#/explorer?inputCurrency=0x514910771AF9Ca656af840dff83E8264EcF986CA
 
   ### Examples.
 
