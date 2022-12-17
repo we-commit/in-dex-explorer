@@ -1,6 +1,10 @@
 # Trojan Finance.
 
-A **_simple_** yet **_powerfull_** open source **transaction explorer** for **Uniswap** and **Sushiswap**.
+A **_simple_** yet **_powerfull_** open source **transaction explorer** for EVM dexes.
+<br>
+Currently working for:
+**Uniswapv2 /  Uniswapv3 / Sushiswap / 1inch.**
+
 
 <br></br>
 <img  style="margin-left:10rem" src="./_assets/1.gif">
